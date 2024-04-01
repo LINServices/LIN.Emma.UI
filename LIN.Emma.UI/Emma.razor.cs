@@ -76,6 +76,8 @@ public partial class Emma
     private ReadOneResponse<Types.Emma.Models.ResponseIAModel>? EmmaResponse { get; set; } = null;
 
 
+    private Movie Movie { get; set; }
+
 
    
 
@@ -230,9 +232,15 @@ public partial class Emma
             // Propiedades.
             var content = param.Where(T => T.Name == "contenido").FirstOrDefault();
 
-            var city = await LIN.Access.Search.Controllers.Search.Get(content.Objeto.Value.ToString());
+            var city =  LIN.Access.Search.Controllers.Search.Get(content.Objeto.Value.ToString());
 
-            SearchModels = city;
+            var movie =  LIN.Access.Search.Controllers.Search.Movie(content.Objeto.Value.ToString());
+
+            await city;
+            await movie;
+
+            SearchModels = city.Result;
+            Movie = movie.Result.Model;
 
             HeaderActualState = HeaderState.Search;
 
