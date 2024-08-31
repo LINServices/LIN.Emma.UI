@@ -79,7 +79,7 @@ public partial class Emma
     private Movie Movie { get; set; }
 
 
-   
+
 
     [Parameter]
     public Task<ReadOneResponse<LIN.Types.Emma.Models.ResponseIAModel>> ResponseIA { get; set; }
@@ -232,9 +232,9 @@ public partial class Emma
             // Propiedades.
             var content = param.Where(T => T.Name == "contenido").FirstOrDefault();
 
-            var city =  LIN.Access.Search.Controllers.Search.Get(content.Objeto.Value.ToString());
+            var city = LIN.Access.Search.Controllers.Search.Get(content.Objeto.Value.ToString());
 
-            var movie =  LIN.Access.Search.Controllers.Search.Movie(content.Objeto.Value.ToString());
+            var movie = LIN.Access.Search.Controllers.Search.Movie(content.Objeto.Value.ToString());
 
             await city;
             await movie;
