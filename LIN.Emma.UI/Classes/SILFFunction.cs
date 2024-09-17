@@ -6,7 +6,6 @@ using SILF.Script.Runtime;
 
 namespace LIN.Emma.UI.Classes;
 
-
 public class SILFFunction : IFunction
 {
 
@@ -21,8 +20,6 @@ public class SILFFunction : IFunction
     {
         Action = action;
     }
-
-
 
     public FuncContext Run(Instance instance, List<SILF.Script.Elements.ParameterValue> values, ObjectContext @object)
     {
