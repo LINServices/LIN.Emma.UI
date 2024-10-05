@@ -103,8 +103,36 @@ public partial class Emma
         if (ResponseIA == null)
             return;
 
-
         var response = await ResponseIA;
+
+
+        switch (response.Response)
+        {
+            case Responses.Success:
+                break;
+            case Responses.RateLimitExceeded:
+                response = new()
+                {
+                    Response = Responses.RateLimitExceeded,
+                    Model = new()
+                    {
+                        Content = "Has excedido el limite de solicitudes permitidas"
+                    }
+                };
+                StateHasChanged();
+                break;
+            default:
+                response = new()
+                {
+                    Response = Responses.RateLimitExceeded,
+                    Model = new()
+                    {
+                        Content = "Hubo un error"
+                    }
+                };
+                StateHasChanged();
+                break;
+        }
 
         // Cambia el estado.
         ActualState = State.Witting;
@@ -112,7 +140,7 @@ public partial class Emma
         Raw = response.Model.Content;
 
         // Es un comando.
-        if (response.Model.Content.StartsWith("#"))
+        if (response.Model?.Content?.StartsWith("#") ?? false)
         {
             var app = new SILF.Script.App(response.Model.Content.Remove(0, 1), new A());
             app.AddDefaultFunctions(Functions.Actions);

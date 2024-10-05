@@ -16,40 +16,39 @@
         switch (Model.Condition)
         {
             case Condition.ThunderStorm:
-                return "./EmmaAssets/weather/storm.png";
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/storm.png";
 
             case Condition.Clear:
-                return "./EmmaAssets/weather/clear.png";
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/clear.png";
 
             case Condition.ScatteredClouds:
-                return "./EmmaAssets/weather/cloud.png";
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/cloud.png";
             case Condition.FewClouds:
-                return "./EmmaAssets/weather/fewClouds.png";
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/fewClouds.png";
             case Condition.Haze:
-                return "./EmmaAssets/weather/haze.png";
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png";
             case Condition.Mist:
-                return "./EmmaAssets/weather/haze.png";
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png";
             case Condition.Smoke:
-                return "./EmmaAssets/weather/haze.png";
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png";
             case Condition.Dust:
-                return "./EmmaAssets/weather/haze.png";
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png";
             case Condition.Fog:
-                return "./EmmaAssets/weather/haze.png";
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png";
             case Condition.Sand:
-                return "./EmmaAssets/weather/haze.png";
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png";
             case Condition.Ash:
-                return "./EmmaAssets/weather/haze.png";
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png";
             case Condition.OvercastClouds:
-                return "./EmmaAssets/weather/Overcast.png";
-
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/Overcast.png";
             case Condition.Rain:
-                return "./EmmaAssets/weather/rain.png";
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/rain.png";
             case Condition.Snow:
-                return "./EmmaAssets/weather/snow.png";
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/snow.png";
             case Condition.BrokenClouds:
-                return "./EmmaAssets/weather/brokenClouds.png";
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/brokenClouds.png";
             case Condition.Tornado:
-                return "./EmmaAssets/weather/tornado.png";
+                return "_content/LIN.Emma.UI/EmmaAssets/weather/tornado.png";
 
 
         }
@@ -69,13 +68,10 @@
         {
             case Condition.ThunderStorm:
                 return "Tormenta";
-
             case Condition.Clear:
                 return "Despejado";
-
             case Condition.ScatteredClouds:
                 return "Nubes dispersas";
-
             case Condition.FewClouds:
                 return "Pocas nubes";
             case Condition.Haze:
@@ -94,7 +90,6 @@
                 return "Ceniza";
             case Condition.OvercastClouds:
                 return "Nubes cubiertas";
-
             case Condition.Rain:
                 return "Lluvia";
             case Condition.Snow:
@@ -103,8 +98,6 @@
                 return "Lloviendo";
             case Condition.Tornado:
                 return "Tornado";
-
-
         }
 
         return "Desconocido";
@@ -119,7 +112,7 @@
 @* Si esta cargando *@
 @if(Model == null || Model.Temperature == null)
 {
-    <div class="flex h-10 w-full justify-center items-end">
+    <div class="flex h-10 w-full items-end justify-center">
         <CircleLoader />
     </div>
     return;
@@ -128,47 +121,47 @@
 
 
 
-<div class="w-full mx-auto bg-white/35 dark:bg-zinc-600/30 rounded-3xl p-6 shadow-lg">
+<div class="bg-white/35 mx-auto w-full rounded-3xl p-6 shadow-lg dark:bg-zinc-600/30">
 
-    <div class="flex justify-between items-center">
+    <div class="flex items-center justify-between">
         <div class="text-6xl font-semibold dark:text-zinc-300">
             @Model.Temperature.Value.ToString("00")°
         </div>
-        <div class="w-12 h-12 bg-white dark:bg-zinc-700 rounded-full flex justify-center items-center">
-            <img alt="Partly cloudy with sun and clouds" class="w-8 h-8" height="50" src="@Img()" width="50" />
+        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-zinc-700">
+            <img alt="Partly cloudy with sun and clouds" class="h-8 w-8" height="50" src="@Img()" width="50" />
         </div>
     </div>
     <div class="mt-4 text-xl font-medium dark:text-zinc-300">
         @(Model.CityName)
     </div>
 
-    <div class="flex gap-2 w-full  mt-4">
+    <div class="mt-4 flex w-full gap-2">
 
-        <div class="flex flex-col items-center justify-center bg-white/80 dark:bg-zinc-600/50 rounded-lg w-full py-1">
+        <div class="bg-white/80 flex w-full flex-col items-center justify-center rounded-lg py-1 dark:bg-zinc-600/50">
 
-            <img class="h-5 w-5" src="./EmmaAssets/weather/haze.png" />
+            <img class="h-5 w-5" src="_content/LIN.Emma.UI/EmmaAssets/weather/haze.png" />
             <label class="dark:text-zinc-300">@Model.Wind.Speed.ToString("#0.#")</label>
 
         </div>
 
 
-        <div class="flex flex-col items-center justify-center bg-white/80 dark:bg-zinc-600/50 rounded-lg w-full py-1">
+        <div class="bg-white/80 flex w-full flex-col items-center justify-center rounded-lg py-1 dark:bg-zinc-600/50">
 
-            <img class="h-5 w-5" src="./EmmaAssets/weather/raindrop.png" />
+            <img class="h-5 w-5" src="_content/LIN.Emma.UI/EmmaAssets/weather/raindrop.png" />
             <label class="dark:text-zinc-300">@Model.Temperature.Humidity</label>
 
         </div>
 
-        <div class="flex flex-col items-center justify-center bg-white/80 dark:bg-zinc-600/50 rounded-lg w-full py-2">
+        <div class="bg-white/80 flex w-full flex-col items-center justify-center rounded-lg py-2 dark:bg-zinc-600/50">
 
-            <img class="h-5 w-5" src="./EmmaAssets/weather/thermometerPlus.png" />
+            <img class="h-5 w-5" src="_content/LIN.Emma.UI/EmmaAssets/weather/thermometerPlus.png" />
             <label class="dark:text-zinc-300">@Model.Temperature.Max.ToString("#0")°</label>
 
         </div>
 
-        <div class="flex flex-col items-center justify-center bg-white/80 dark:bg-zinc-600/50 rounded-lg w-full py-1">
+        <div class="bg-white/80 flex w-full flex-col items-center justify-center rounded-lg py-1 dark:bg-zinc-600/50">
 
-            <img class="h-5 w-5" src="./EmmaAssets/weather/thermometer.png" />
+            <img class="h-5 w-5" src="_content/LIN.Emma.UI/EmmaAssets/weather/thermometer.png" />
             <label class="dark:text-zinc-300">@Model.Temperature.Min.ToString("#0")°</label>
 
         </div>
@@ -176,12 +169,12 @@
 
     </div>
 
-    <div class="mt-4 bg-white/80 dark:bg-zinc-600/50 rounded-xl p-4">
+    <div class="bg-white/80 mt-4 rounded-xl p-4 dark:bg-zinc-600/50">
         <div class="flex items-center text-blue-800">
             <span class="font-medium dark:text-current-500">En este momento</span>
         </div>
         
-        <div class="flex items-center mt-2">
+        <div class="mt-2 flex items-center">
            
             <span class="text-2xl font-semibold dark:text-zinc-300">
                @Text()
