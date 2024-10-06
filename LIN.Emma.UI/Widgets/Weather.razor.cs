@@ -1,12 +1,17 @@
-﻿@using LIN.Types.Exp.Search.Models;
-@using LIN.Types.Exp.Search.Enums;
+﻿using LIN.Types.Exp.Search.Enums;
 
-@code{
+namespace LIN.Emma.UI.Widgets;
+
+public partial class Weather
+{
 
     [Parameter]
-    public Weather? Model { get; set; }
+    public LIN.Types.Exp.Search.Models.Weather? Model { get; set; }
 
 
+    /// <summary>
+    /// Obtener img.
+    /// </summary>
     public string Img()
     {
         if (Model == null)
@@ -17,10 +22,8 @@
         {
             case Condition.ThunderStorm:
                 return "_content/LIN.Emma.UI/EmmaAssets/weather/storm.png";
-
             case Condition.Clear:
                 return "_content/LIN.Emma.UI/EmmaAssets/weather/clear.png";
-
             case Condition.ScatteredClouds:
                 return "_content/LIN.Emma.UI/EmmaAssets/weather/cloud.png";
             case Condition.FewClouds:
@@ -58,6 +61,9 @@
     }
 
 
+    /// <summary>
+    /// Obtener texto.
+    /// </summary>
     public string Text()
     {
         if (Model == null)
@@ -104,82 +110,4 @@
 
     }
 
-
-
 }
-
-
-@* Si esta cargando *@
-@if(Model == null || Model.Temperature == null)
-{
-    <div class="flex h-10 w-full items-end justify-center">
-        <CircleLoader />
-    </div>
-    return;
-}
-
-
-
-
-<div class="bg-white/35 mx-auto w-full rounded-3xl p-6 shadow-lg dark:bg-zinc-600/30">
-
-    <div class="flex items-center justify-between">
-        <div class="text-6xl font-semibold dark:text-zinc-300">
-            @Model.Temperature.Value.ToString("00")°
-        </div>
-        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-zinc-700">
-            <img alt="Partly cloudy with sun and clouds" class="h-8 w-8" height="50" src="@Img()" width="50" />
-        </div>
-    </div>
-    <div class="mt-4 text-xl font-medium dark:text-zinc-300">
-        @(Model.CityName)
-    </div>
-
-    <div class="mt-4 flex w-full gap-2">
-
-        <div class="bg-white/80 flex w-full flex-col items-center justify-center rounded-lg py-1 dark:bg-zinc-600/50">
-
-            <img class="h-5 w-5" src="_content/LIN.Emma.UI/EmmaAssets/weather/haze.png" />
-            <label class="dark:text-zinc-300">@Model.Wind.Speed.ToString("#0.#")</label>
-
-        </div>
-
-
-        <div class="bg-white/80 flex w-full flex-col items-center justify-center rounded-lg py-1 dark:bg-zinc-600/50">
-
-            <img class="h-5 w-5" src="_content/LIN.Emma.UI/EmmaAssets/weather/raindrop.png" />
-            <label class="dark:text-zinc-300">@Model.Temperature.Humidity</label>
-
-        </div>
-
-        <div class="bg-white/80 flex w-full flex-col items-center justify-center rounded-lg py-2 dark:bg-zinc-600/50">
-
-            <img class="h-5 w-5" src="_content/LIN.Emma.UI/EmmaAssets/weather/thermometerPlus.png" />
-            <label class="dark:text-zinc-300">@Model.Temperature.Max.ToString("#0")°</label>
-
-        </div>
-
-        <div class="bg-white/80 flex w-full flex-col items-center justify-center rounded-lg py-1 dark:bg-zinc-600/50">
-
-            <img class="h-5 w-5" src="_content/LIN.Emma.UI/EmmaAssets/weather/thermometer.png" />
-            <label class="dark:text-zinc-300">@Model.Temperature.Min.ToString("#0")°</label>
-
-        </div>
-
-
-    </div>
-
-    <div class="bg-white/80 mt-4 rounded-xl p-4 dark:bg-zinc-600/50">
-        <div class="flex items-center text-blue-800">
-            <span class="font-medium dark:text-current-500">En este momento</span>
-        </div>
-        
-        <div class="mt-2 flex items-center">
-           
-            <span class="text-2xl font-semibold dark:text-zinc-300">
-               @Text()
-            </span>
-        </div>
-    </div>
-
-</div>

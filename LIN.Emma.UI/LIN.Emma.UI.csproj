@@ -26,7 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\SILF\SILF\SILF.Script\SILF.Script.csproj" />
     <ProjectReference Include="..\..\..\AccesoAPI\LIN.Access.Search\LIN.Access.Search.csproj" />
-    <ProjectReference Include="..\..\..\Tipos\LIN.Types.Emma\LIN.Types.Emma.csproj" />
+    <ProjectReference Include="..\..\..\Tipos\LIN.Types.Cloud.OpenAssistant\LIN.Types.Cloud.OpenAssistant.csproj" />
     <ProjectReference Include="..\..\..\Tipos\LIN.Types.Exp.Search\LIN.Types.Exp.Search.csproj" />
     <ProjectReference Include="..\..\..\Tipos\LIN.Types\LIN.Types.csproj" />
   </ItemGroup>

@@ -1,7 +1,6 @@
 ﻿using LIN.Emma.UI.Classes;
 using LIN.Types.Exp.Search.Models;
 using LIN.Types.Responses;
-using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SILF.Script.Elements.Functions;
 using SILF.Script.Enums;
@@ -19,13 +18,9 @@ public partial class Emma
     /// </summary>
     public event EventHandler<string>? OnPromptRequire;
 
+    private string Raw = "";
 
-
-
-
-    string Raw = "";
-
-    ReadAllResponse<SearchResult> SearchModels { get; set; } = new();
+    private ReadAllResponse<SearchResult> SearchModels { get; set; } = new();
 
 
     public ReadOneResponse<Weather> Modelo { get; set; }
@@ -73,7 +68,7 @@ public partial class Emma
     /// <summary>
     /// Respuesta de Emma.
     /// </summary>
-    private ReadOneResponse<Types.Emma.Models.ResponseIAModel>? EmmaResponse { get; set; } = null;
+    private ReadOneResponse<Types.Cloud.OpenAssistant.Api.AssistantResponse>? EmmaResponse { get; set; } = null;
 
 
     private Movie Movie { get; set; }
@@ -82,7 +77,7 @@ public partial class Emma
 
 
     [Parameter]
-    public Task<ReadOneResponse<LIN.Types.Emma.Models.ResponseIAModel>> ResponseIA { get; set; }
+    public Task<ReadOneResponse<Types.Cloud.OpenAssistant.Api.AssistantResponse>> ResponseIA { get; set; }
 
 
 
@@ -180,8 +175,7 @@ public partial class Emma
         ToEmma();
     }
 
-
-    IEnumerable<SILFFunction> Load()
+    private IEnumerable<SILFFunction> Load()
     {
 
         // Acción.
@@ -198,8 +192,7 @@ public partial class Emma
                 Response = Responses.Success,
                 Model = new()
                 {
-                    Content = content?.Objeto.Value.ToString(),
-                    IsSuccess = true
+                    Content = content?.Objeto.Value.ToString()
                 }
             };
 
@@ -294,7 +287,7 @@ public partial class Emma
 
 }
 
-class A : IConsole
+internal class A : IConsole
 {
     public void InsertLine(string error, string result, LogLevel logLevel)
     {
