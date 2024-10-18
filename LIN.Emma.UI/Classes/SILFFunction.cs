@@ -14,7 +14,8 @@ public class SILFFunction : IFunction
     public List<Parameter> Parameters { get; set; } = new();
 
     Context IFunction.Context { get; set; }
-    Action<List<SILF.Script.Elements.ParameterValue>> Action;
+
+    private Action<List<SILF.Script.Elements.ParameterValue>> Action;
 
     public SILFFunction(Action<List<SILF.Script.Elements.ParameterValue>> action)
     {

@@ -14,50 +14,28 @@ public partial class Weather
     /// </summary>
     public string Img()
     {
-        if (Model == null)
-            return ("");
-
-
-        switch (Model.Condition)
-        {
-            case Condition.ThunderStorm:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/storm.png";
-            case Condition.Clear:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/clear.png";
-            case Condition.ScatteredClouds:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/cloud.png";
-            case Condition.FewClouds:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/fewClouds.png";
-            case Condition.Haze:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png";
-            case Condition.Mist:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png";
-            case Condition.Smoke:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png";
-            case Condition.Dust:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png";
-            case Condition.Fog:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png";
-            case Condition.Sand:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png";
-            case Condition.Ash:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png";
-            case Condition.OvercastClouds:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/Overcast.png";
-            case Condition.Rain:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/rain.png";
-            case Condition.Snow:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/snow.png";
-            case Condition.BrokenClouds:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/brokenClouds.png";
-            case Condition.Tornado:
-                return "_content/LIN.Emma.UI/EmmaAssets/weather/tornado.png";
-
-
-        }
-
-        return "";
-
+        return Model == null
+            ? ""
+            : Model.Condition switch
+            {
+                Condition.ThunderStorm => "_content/LIN.Emma.UI/EmmaAssets/weather/storm.png",
+                Condition.Clear => "_content/LIN.Emma.UI/EmmaAssets/weather/clear.png",
+                Condition.ScatteredClouds => "_content/LIN.Emma.UI/EmmaAssets/weather/cloud.png",
+                Condition.FewClouds => "_content/LIN.Emma.UI/EmmaAssets/weather/fewClouds.png",
+                Condition.Haze => "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png",
+                Condition.Mist => "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png",
+                Condition.Smoke => "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png",
+                Condition.Dust => "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png",
+                Condition.Fog => "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png",
+                Condition.Sand => "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png",
+                Condition.Ash => "_content/LIN.Emma.UI/EmmaAssets/weather/haze.png",
+                Condition.OvercastClouds => "_content/LIN.Emma.UI/EmmaAssets/weather/Overcast.png",
+                Condition.Rain => "_content/LIN.Emma.UI/EmmaAssets/weather/rain.png",
+                Condition.Snow => "_content/LIN.Emma.UI/EmmaAssets/weather/snow.png",
+                Condition.BrokenClouds => "_content/LIN.Emma.UI/EmmaAssets/weather/brokenClouds.png",
+                Condition.Tornado => "_content/LIN.Emma.UI/EmmaAssets/weather/tornado.png",
+                _ => "",
+            };
     }
 
 
@@ -66,48 +44,28 @@ public partial class Weather
     /// </summary>
     public string Text()
     {
-        if (Model == null)
-            return ("");
-
-
-        switch (Model.Condition)
-        {
-            case Condition.ThunderStorm:
-                return "Tormenta";
-            case Condition.Clear:
-                return "Despejado";
-            case Condition.ScatteredClouds:
-                return "Nubes dispersas";
-            case Condition.FewClouds:
-                return "Pocas nubes";
-            case Condition.Haze:
-                return "Niebla";
-            case Condition.Mist:
-                return "Niebla";
-            case Condition.Smoke:
-                return "Humo";
-            case Condition.Dust:
-                return "Polvo";
-            case Condition.Fog:
-                return "Niebla";
-            case Condition.Sand:
-                return "Arena";
-            case Condition.Ash:
-                return "Ceniza";
-            case Condition.OvercastClouds:
-                return "Nubes cubiertas";
-            case Condition.Rain:
-                return "Lluvia";
-            case Condition.Snow:
-                return "Nevando";
-            case Condition.BrokenClouds:
-                return "Lloviendo";
-            case Condition.Tornado:
-                return "Tornado";
-        }
-
-        return "Desconocido";
-
+        return Model == null
+            ? ""
+            : Model.Condition switch
+            {
+                Condition.ThunderStorm => "Tormenta",
+                Condition.Clear => "Despejado",
+                Condition.ScatteredClouds => "Nubes dispersas",
+                Condition.FewClouds => "Pocas nubes",
+                Condition.Haze => "Niebla",
+                Condition.Mist => "Niebla",
+                Condition.Smoke => "Humo",
+                Condition.Dust => "Polvo",
+                Condition.Fog => "Niebla",
+                Condition.Sand => "Arena",
+                Condition.Ash => "Ceniza",
+                Condition.OvercastClouds => "Nubes cubiertas",
+                Condition.Rain => "Lluvia",
+                Condition.Snow => "Nevando",
+                Condition.BrokenClouds => "Lloviendo",
+                Condition.Tornado => "Tornado",
+                _ => "Desconocido",
+            };
     }
 
 }

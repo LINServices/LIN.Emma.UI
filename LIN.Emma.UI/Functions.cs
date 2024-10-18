@@ -2,7 +2,6 @@
 
 namespace LIN.Emma.UI;
 
-
 public class Functions
 {
     /// <summary>
@@ -22,7 +21,4 @@ public class Functions
         Actions.AddRange(functions);
     }
 
-
 }
-
-
