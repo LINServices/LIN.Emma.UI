@@ -131,14 +131,13 @@ public partial class Emma
         ActualState = State.Witting;
 
         // Ejecutar comandos.
-        foreach (var e in response.Model.Commands)
+        foreach (var e in response.Model.Commands ?? [])
         {
             var app = new SILF.Script.App(e);
             app.AddDefaultFunctions(Functions.Actions);
             app.AddDefaultFunctions(Load());
 
             app.Run();
-
         }
 
         HeaderActualState = HeaderState.Titles;
