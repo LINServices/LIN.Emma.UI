@@ -9,12 +9,10 @@ public class Functions
     /// </summary>
     public static List<IFunction> Actions { get; set; } = new();
 
-
     public static void LoadActions(IFunction function)
     {
         Actions.Add(function);
     }
-
 
     public static void LoadActions(IEnumerable<IFunction> functions)
     {

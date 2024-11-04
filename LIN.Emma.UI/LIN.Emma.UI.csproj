@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="LIN.Types.Cloud.OpenAssistant" Version="1.0.0" />
+    <PackageReference Include="LIN.Types.Cloud.OpenAssistant" Version="1.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.10" />
     <PackageReference Include="SILF.Script" Version="1.0.0" />
   </ItemGroup>

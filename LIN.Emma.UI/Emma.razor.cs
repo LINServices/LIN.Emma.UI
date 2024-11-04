@@ -3,8 +3,6 @@ using LIN.Types.Exp.Search.Models;
 using LIN.Types.Responses;
 using Microsoft.JSInterop;
 using SILF.Script.Elements.Functions;
-using SILF.Script.Enums;
-using SILF.Script.Interfaces;
 
 namespace LIN.Emma.UI;
 
@@ -68,7 +66,7 @@ public partial class Emma
     /// <summary>
     /// Respuesta de Emma.
     /// </summary>
-    private ReadOneResponse<Types.Cloud.OpenAssistant.Api.AssistantResponse>? EmmaResponse { get; set; } = null;
+    private ReadOneResponse<Types.Cloud.OpenAssistant.Models.EmmaSchemaResponse>? EmmaResponse { get; set; } = null;
 
 
     private Movie Movie { get; set; }
@@ -77,7 +75,7 @@ public partial class Emma
 
 
     [Parameter]
-    public Task<ReadOneResponse<Types.Cloud.OpenAssistant.Api.AssistantResponse>> ResponseIA { get; set; }
+    public Task<ReadOneResponse<Types.Cloud.OpenAssistant.Models.EmmaSchemaResponse>> ResponseIA { get; set; }
 
 
 
@@ -111,7 +109,7 @@ public partial class Emma
                     Response = Responses.RateLimitExceeded,
                     Model = new()
                     {
-                        Content = "Has excedido el limite de solicitudes permitidas"
+                        UserText = "Has excedido el limite de solicitudes permitidas"
                     }
                 };
                 StateHasChanged();
@@ -122,7 +120,7 @@ public partial class Emma
                     Response = Responses.RateLimitExceeded,
                     Model = new()
                     {
-                        Content = "Hubo un error"
+                        UserText = "Hubo un error"
                     }
                 };
                 StateHasChanged();
@@ -132,32 +130,20 @@ public partial class Emma
         // Cambia el estado.
         ActualState = State.Witting;
 
-        Raw = response.Model.Content;
-
-        // Es un comando.
-        if (response.Model?.Content?.StartsWith("#") ?? false)
+        // Ejecutar comandos.
+        foreach (var e in response.Model.Commands)
         {
-            var app = new SILF.Script.App(response.Model.Content.Remove(0, 1), new A());
+            var app = new SILF.Script.App(e);
             app.AddDefaultFunctions(Functions.Actions);
             app.AddDefaultFunctions(Load());
 
-            EmmaResponse = new()
-            {
-                Response = Responses.Success,
-                Model = new()
-                {
-                    Content = "Perfecto"
-                }
-            };
-
             app.Run();
-            StateHasChanged();
-            return;
+
         }
 
-        // Establece la respuesta de Emma.
-        EmmaResponse = response;
         HeaderActualState = HeaderState.Titles;
+        EmmaResponse = response;
+
         StateHasChanged();
 
     }
@@ -177,38 +163,6 @@ public partial class Emma
 
     private IEnumerable<SILFFunction> Load()
     {
-
-        // Acción.
-        SILFFunction actionMessage =
-        new((param) =>
-        {
-
-            // Propiedades.
-            var content = param.Where(T => T.Name == "contenido").FirstOrDefault();
-
-            EmmaResponse = new()
-            {
-                Message = content?.Objeto.Value.ToString(),
-                Response = Responses.Success,
-                Model = new()
-                {
-                    Content = content?.Objeto.Value.ToString()
-                }
-            };
-
-            HeaderActualState = HeaderState.Titles;
-
-            StateHasChanged();
-
-
-        })
-        {
-            Name = "say",
-            Parameters =
-            [
-                new Parameter("contenido", new("string"))
-            ]
-        };
 
 
         // Acción.
@@ -277,7 +231,7 @@ public partial class Emma
             ]
         };
 
-        return [actionMessage, weather, search];
+        return [weather, search];
 
 
 
@@ -285,12 +239,4 @@ public partial class Emma
 
 
 
-}
-
-internal class A : IConsole
-{
-    public void InsertLine(string error, string result, LogLevel logLevel)
-    {
-        var s = "";
-    }
 }
