@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFrameworks>net8.0;net9.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
@@ -12,10 +12,17 @@
 
 	<ItemGroup>
 		<PackageReference Include="LIN.Types.Cloud.OpenAssistant" Version="1.4.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.11" />
 		<PackageReference Include="SILF.Script" Version="13.2.0" />
 	</ItemGroup>
+	
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.11" />
+	</ItemGroup>
 
+	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.0" />
+	</ItemGroup>
+	
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\AccesoAPI\LIN.Access.Search\LIN.Access.Search.csproj" />
 	</ItemGroup>
