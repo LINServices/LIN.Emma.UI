@@ -9,6 +9,13 @@ public class Functions
     /// </summary>
     public static List<IFunction> Actions { get; set; } = new();
 
+    /// <summary>
+    /// Funciones.
+    /// </summary>
+    public static List<Delegate> Delegates { get; set; } = new();
+
+
+
     public static void LoadActions(IFunction function)
     {
         Actions.Add(function);
@@ -17,6 +24,11 @@ public class Functions
     public static void LoadActions(IEnumerable<IFunction> functions)
     {
         Actions.AddRange(functions);
+    }
+
+    public static void LoadActions(IEnumerable<Delegate> functions)
+    {
+        Delegates.AddRange(functions);
     }
 
 }

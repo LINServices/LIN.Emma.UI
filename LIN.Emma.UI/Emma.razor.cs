@@ -30,9 +30,8 @@ public partial class Emma
     /// Actual estado.
     /// </summary>
     private State ActualState { get; set; } = State.Witting;
+
     private HeaderState HeaderActualState { get; set; } = HeaderState.Titles;
-
-
 
     /// <summary>
     /// Lista de estados.
@@ -136,7 +135,7 @@ public partial class Emma
             var app = new SILF.Script.App(e);
             app.AddDefaultFunctions(Functions.Actions);
             app.AddDefaultFunctions(Load());
-
+            app.AddBridget([.. Functions.Delegates]);
             app.Run();
         }
 
