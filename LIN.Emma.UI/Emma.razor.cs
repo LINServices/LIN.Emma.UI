@@ -81,7 +81,7 @@ public partial class Emma
     /// <summary>
     /// Enviar a Emma.
     /// </summary>
-    private async void ToEmma()
+    private async void ToEmma(bool speek = false)
     {
 
         // Cambia el estado.
@@ -101,7 +101,11 @@ public partial class Emma
         switch (response.Response)
         {
             case Responses.Success:
-                break;
+                {
+                    if (speek)
+                        _ = js.InvokeVoidAsync("speakText", response.Model.UserText);
+                    break;
+                }
             case Responses.RateLimitExceeded:
                 response = new()
                 {
@@ -236,5 +240,91 @@ public partial class Emma
     }
 
 
+    private bool isListening;
+    private bool isBusy;
+    private string status = "Listo.";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var objRef = DotNetObjectReference.Create(this);
+            // Requiere haber agregado el script SpeechInterop en el HTML
+            await js.InvokeVoidAsync("SpeechInterop.init", objRef, new
+            {
+                lang = "es-ES",          // o "es-CO"
+                interimResults = true,
+                continuous = false       // false => se corta al detectar silencio
+            });
+        }
+    }
+
+    private async Task StartAsync()
+    {
+        isBusy = true; status = "Solicitando micrófono…";
+        StateHasChanged();
+        try
+        {
+            await js.InvokeVoidAsync("SpeechInterop.start");
+        }
+        catch (Exception ex)
+        {
+            status = $"Error: {ex.Message}";
+        }
+        finally
+        {
+            isBusy = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task StopAsync()
+    {
+        try { await js.InvokeVoidAsync("SpeechInterop.stop"); }
+        catch { /* ignore */ }
+    }
+
+    [JSInvokable]
+    public Task OnRecognitionStarted()
+    {
+        isListening = true;
+        status = "Escuchando… habla cuando quieras.";
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    [JSInvokable]
+    public Task OnTranscriptPartial(string text)
+    {
+        Prompt = text;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    [JSInvokable]
+    public Task OnTranscriptFinal(string text)
+    {
+        Prompt = text;
+        ToEmma(speek: true);
+        return Task.CompletedTask;
+    }
+
+    [JSInvokable]
+    public Task OnRecognitionEnded()
+    {
+        isListening = false;
+        status = "Reconocimiento finalizado (detectó silencio).";
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    [JSInvokable]
+    public Task OnRecognitionError(string error)
+    {
+        isListening = false;
+        status = $"Error de reconocimiento: {error}";
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
 
 }

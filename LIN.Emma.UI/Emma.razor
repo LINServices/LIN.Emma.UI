@@ -31,37 +31,37 @@
             <div class="flex h-full w-full items-center justify-center">
                 <label class="dark:text-zinc-200">@(EmmaResponse.Model.UserText)</label>
             </div>
+        }
+    }
+
+    else if (HeaderActualState == HeaderState.Weather)
+    {
+        <div class="flex h-full items-center justify-end">
+            @if (Modelo.Response == Responses.IsLoading)
+            {
+                <label>Cargando pronostico del tiempo</label>
             }
-        }
+            else if (Modelo.Response == Responses.Success)
+            {
+                <Weather Model="Modelo.Model" />
+            }
+            else
+            {
+                <label>El servicio actualmente no esta disponible</label>
+            }
+        </div>
 
-        else if (HeaderActualState == HeaderState.Weather)
-        {
-            <div class="flex h-full items-center justify-end">
-                @if (Modelo.Response == Responses.IsLoading)
-                {
-                    <label>Cargando pronostico del tiempo</label>
-                }
-                else if (Modelo.Response == Responses.Success)
-                {
-                    <Weather Model="Modelo.Model" />
-                }
-                else
-                {
-                    <label>El servicio actualmente no esta disponible</label>
-                }
-            </div>
-           
-        }
+    }
 
-        else if (HeaderActualState == HeaderState.Search)
-        {
-            <div class="flex flex-col gap-2 overflow-auto pb-2 [&::-webkit-scrollbar]:w-2
-[&::-webkit-scrollbar-track]:rounded-full
-[&::-webkit-scrollbar-track]:bg-transparent
-[&::-webkit-scrollbar-thumb]:rounded-full
-[&::-webkit-scrollbar-thumb]:bg-gray-300
-dark:[&::-webkit-scrollbar-track]:bg-zinc-900
-dark:[&::-webkit-scrollbar-thumb]:bg-zinc-800">
+    else if (HeaderActualState == HeaderState.Search)
+    {
+        <div class="flex flex-col gap-2 overflow-auto pb-2 [&::-webkit-scrollbar]:w-2
+    [&::-webkit-scrollbar-track]:rounded-full
+    [&::-webkit-scrollbar-thumb]:rounded-full
+    [&::-webkit-scrollbar-track]:bg-transparent
+    [&::-webkit-scrollbar-thumb]:bg-gray-300
+    dark:[&::-webkit-scrollbar-track]:bg-zinc-900
+    dark:[&::-webkit-scrollbar-thumb]:bg-zinc-800">
 
             <div class="flex h-10 w-full items-center gap-2">
                 <img class="h-5 w-5" src="./EmmaAssets/bing.png" />
@@ -71,37 +71,44 @@ dark:[&::-webkit-scrollbar-thumb]:bg-zinc-800">
 
             <MovieWidget Modelo="Movie" />
 
-                @foreach(var e in SearchModels.Models)
-                {
-                    <SearchResultControl Modelo="e"></SearchResultControl>
-                }
+            @foreach (var e in SearchModels.Models)
+            {
+                <SearchResultControl Modelo="e"></SearchResultControl>
+            }
 
-            </div>
+        </div>
 
-        }
+    }
 
+    @* Entrada *@
+    @if (ActualState == State.Witting)
+    {
+        <div class="w-full">
+            <div class="w-full rounded-lg border border-gray-200 bg-gray-50 dark:border-zinc-600 dark:bg-zinc-700">
+                <div class="rounded-t-lg bg-white px-4 py-2 dark:bg-zinc-800">
+                    <label for="comment" class="sr-only">Emma</label>
+                    <textarea @bind="Prompt" rows="4"
+                              class="w-full resize-none border-0 bg-white px-0 text-sm text-gray-900 outline-none focus:ring-0 dark:bg-zinc-800 dark:text-white dark:placeholder-gray-400"
+                              placeholder="Pregunta algo a Emma..." required />
+                </div>
+                <div class="flex items-center justify-between border-t px-3 py-2 dark:border-gray-600">
 
-        @* Entrada *@
-        @if (ActualState == State.Witting)
-        {
-            <div class="w-full">
-                <div class="w-full rounded-lg border border-gray-200 bg-gray-50 dark:bg-zinc-700 dark:border-zinc-600">
-                    <div class="rounded-t-lg bg-white px-4 py-2 dark:bg-zinc-800">
-                        <label for="comment" class="sr-only">Emma</label>
-                        <textarea @bind="Prompt" rows="4"
-                                  class="border-0 w-full resize-none bg-white px-0 text-sm text-gray-900 outline-none focus:ring-0 dark:bg-zinc-800 dark:text-white dark:placeholder-gray-400"
-                                  placeholder="Pregunta algo a Emma..." required />
-                    </div>
-                    <div
-                         class="flex items-center justify-between border-t px-3 py-2 dark:border-gray-600">
-                        <button @onclick="ToEmma" type="submit"
-                                class="inline-flex items-center rounded-lg bg-current-500 px-4 py-2.5 text-center text-xs font-medium text-white hover:bg-current-800 focus:ring-4 focus:ring-current-200 dark:bg-current-600 dark:focus:ring-current-900">
+                    <div class="flex items-center gap-2">
+                        <button @onclick="() => ToEmma(false)" type="submit"
+                                class="inline-flex items-center rounded-xl bg-current-500 px-4 py-2.5 text-center text-xs font-medium text-white hover:bg-current-800 focus:ring-4 focus:ring-current-200 dark:bg-current-600 dark:focus:ring-current-900">
                             Enviar
                         </button>
 
+                        <button @onclick="StartAsync" type="submit"
+                                class="group inline-flex items-center rounded-full border border-zinc-500 p-2.5 text-center text-xs font-medium text-white hover:bg-current-500 dark:bg-current-600 @(isListening ? "bg-current-500" : "bg-transparent")">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mic-fill @(isListening ? "fill-white" : "fill-zinc-500")" viewBox="0 0 16 16">
+                                <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0z" />
+                                <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
-        }
-
+        </div>
+    }
 </div>
