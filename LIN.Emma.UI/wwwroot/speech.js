@@ -82,7 +82,7 @@ async function speakText(text) {
 
     try {
         // Llamar al endpoint de la API .NET
-        const resp = await fetch("https://api.linplatform.com/tts/api/voice", {
+        const resp = await fetch("https://api.linplatform.com/tts/speech", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ text })
